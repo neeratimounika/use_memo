@@ -1,81 +1,36 @@
-import { useEffect, useMemo, useState } from "react"
-import './App.css'
-function App() {
+import React, { useRef, useState } from 'react'
 
-    const [Time, setTime] = useState(new Date().toLocaleTimeString());
+const App = () => {
+    const [email,setEmail]=useState('');
+    // const[password,setPassword]=useState('');
+    const pwd = useRef();
 
-    const [products, setProducts] = useState(
-        [
-            { id: 1, name: 'One Plus Nord CE2', price: 20000 },
-            { id: 2, name: 'Oppo F21 S', price: 22000 },
-            { id: 3, name: 'Samsung Galaxy  M 33', price: 17000 },
-        ]
-    )
+  return (
+    <>
+    <div className='border w-25 mt-5 m-auto p-3'>
+        <h2 className='text-primary text-center'>Login Form </h2>
+        <div className='mt-3'>
+            <label>Email</label>
+            <input type='email' className='form-control' value={email}
+            onChange={(e)=>{setEmail(e.target.value)}}/>
+        </div>
+      
+        <div className='mt-3'>
+            <label>Password</label>
+            <input type='password' className='form-control' ref={pwd}
+            />
+        </div>
 
+        <div className='mt-3'>
+            <button className='btn btn-primary w-100' onClick={()=>{
+              console.log('password:',pwd.current.value)
 
-    const [searchText, updateSearchText] = useState('');
-
-    const filteredProducts = useMemo(
-
-        () => {
-
-            console.log(products)
-
-            return products.filter(
-                (p) => {
-
-                    return p.name.toLowerCase().includes(searchText.toLowerCase())
-
-                }
-            )
-
-        },
-        [products, searchText]
-
-    )
-
-
-    useEffect(
-        () => {
-            setInterval(
-                () => {
-                    setTime(new Date().toLocaleTimeString())
-
-                }, 1000
-            )
-
-        }, []
-    )
-
-    return (
-        <>
-
-            <div>{Time}</div>
-
-            <input type="text" value={searchText} onChange={e => updateSearchText(e.target.value)} />
-
-            <table>
-                <tr>
-                    <td> S.No</td>
-                    <td>Name</td>
-                    <td>Price</td>
-                </tr>
-                {
-                    filteredProducts.map(
-                        p => (
-                            <tr key={p.id}>
-                                <td> {p.id}</td>
-                                <td>{p.name}</td>
-                                <td>{p.price}</td>
-                            </tr>
-
-                        )
-                    )
-                }
-            </table>
-        </>
-    )
-
+            }}>Login</button>
+        </div>
+      
+      </div>
+    </>
+  )
 }
 
 export default App
